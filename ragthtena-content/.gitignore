@@ -1,0 +1,10 @@
+# PDFs and ChromaDB indexes
+*.pdf
+.index/
+*.db
+*.bin
+*.pickle
+
+# OS files
+.DS_Store
+Thumbs.db
