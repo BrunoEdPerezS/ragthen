@@ -3,3 +3,11 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+.env
+.env.*
+*.pem
+*.key
+*.crt
+credentials*
+secrets*
+config.json
