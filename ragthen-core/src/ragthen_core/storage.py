@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 _embedding_model = None
-_log_tag = "[ragthtena]"
+_log_tag = "[ragthen]"
 
 INDEX_DIRNAME = ".index"
 

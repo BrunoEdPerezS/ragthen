@@ -3,13 +3,13 @@ import sys
 import urllib.request
 import urllib.error
 from .interface import Backend
-from ragthtena_core.config import load_config
+from ragthen_core.config import load_config
 
-_log_tag = "[ragthtena]"
+_log_tag = "[ragthen]"
 
 
 class RemoteBackend(Backend):
-    """Talks to a Raghtena API server via HTTP. No local ChromaDB needed."""
+    """Talks to a Ragthen API server via HTTP. No local ChromaDB needed."""
 
     def __init__(self, base_url: str | None = None):
         cfg = load_config()

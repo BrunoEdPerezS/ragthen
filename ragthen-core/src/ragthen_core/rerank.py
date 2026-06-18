@@ -1,7 +1,7 @@
 import sys
 
 _reranker = None
-_log_tag = "[ragthtena]"
+_log_tag = "[ragthen]"
 
 
 def _get_reranker():

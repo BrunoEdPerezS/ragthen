@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-_APP_DIR = Path.home() / ".ragthtena"
+_APP_DIR = Path.home() / ".ragthen"
 CONFIG_FILE = _APP_DIR / "config.json"
 LIBRARIES_DIR = _APP_DIR / "libraries"
 

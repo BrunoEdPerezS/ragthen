@@ -1,12 +1,12 @@
-"""Obsidian vault operations for Raghtena — minimal read-only."""
+"""Obsidian vault operations for Ragthen — minimal read-only."""
 
 from pathlib import Path
 
-_LOG_TAG = "[ragthtena]"
+_LOG_TAG = "[ragthen]"
 
 
 def resolve(path: str | None = None) -> str | None:
-    from ragthtena_core.config import load_config
+    from ragthen_core.config import load_config
     p = path or load_config().get("vault_path", "")
     if not p:
         return None

@@ -1,4 +1,4 @@
-"""Raghtena CLI — RAG agent with local/remote backends."""
+"""Ragthen CLI — RAG agent with local/remote backends."""
 
 import os
 import sys
@@ -6,11 +6,11 @@ import json
 import argparse
 from pathlib import Path
 
-from ragthtena_core.config import load_config, CONFIG_FILE, LIBRARIES_DIR
-from ragthtena_agent.backends import LocalBackend, RemoteBackend
-from ragthtena_agent import vault as vlt
+from ragthen_core.config import load_config, CONFIG_FILE, LIBRARIES_DIR
+from ragthen_agent.backends import LocalBackend, RemoteBackend
+from ragthen_agent import vault as vlt
 
-_log_tag = "[ragthtena]"
+_log_tag = "[ragthen]"
 
 
 def _safe_print(text: str):
@@ -79,10 +79,10 @@ def _handle_vault_ingest(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Raghtena — Multi-library RAG agent")
+    parser = argparse.ArgumentParser(description="Ragthen — Multi-library RAG agent")
     parent_lib = argparse.ArgumentParser(add_help=False)
     parent_lib.add_argument("-l", "--library", metavar="NAME",
-                            help="Library name under ~/.ragthtena/libraries/")
+                            help="Library name under ~/.ragthen/libraries/")
     parent_vault = argparse.ArgumentParser(add_help=False)
     parent_vault.add_argument("--vault", metavar="PATH", default="",
                               help="Obsidian vault path (or set in config.json)")

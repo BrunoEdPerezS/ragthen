@@ -1,12 +1,12 @@
 from .interface import Backend
-from ragthtena_core.engine import (ingest as _ingest, search as _search, ask as _ask,
+from ragthen_core.engine import (ingest as _ingest, search as _search, ask as _ask,
                                      status as _status, clear as _clear, list_libraries as _list,
                                      resolve_library)
-from ragthtena_core.config import load_config
+from ragthen_core.config import load_config
 
 
 class LocalBackend(Backend):
-    """Uses ragthtena-core directly as a Python library. Zero network calls."""
+    """Uses ragthen-core directly as a Python library. Zero network calls."""
 
     def ingest(self, library: str) -> None:
         lib_dir, index_dir = resolve_library(library)

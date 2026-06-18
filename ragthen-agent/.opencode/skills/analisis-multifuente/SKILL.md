@@ -1,18 +1,18 @@
 ---
 name: analisis-multifuente
-description: Cross-source deep analysis from Raghtena libraries. Executes targeted searches per source, integrates multiple perspectives into a single coherent model with page-level citations, and generates actionable Obsidian notes with proper Spanish orthography.
+description: Cross-source deep analysis from Ragthen libraries. Executes targeted searches per source, integrates multiple perspectives into a single coherent model with page-level citations, and generates actionable Obsidian notes with proper Spanish orthography.
 license: MIT
 compatibility: opencode
 metadata:
   audience: research
-  requires: ragthtena-agent
+  requires: ragthen-agent
 ---
 
-# Analisis Multifuente con Raghtena
+# Analisis Multifuente con Ragthen
 
 ## What I do
 
-Generate deep, actionable analyses by cross-referencing **multiple sources** from a Raghtena library. Each source covers a different angle of the same topic. I execute targeted searches for each source using its own vocabulary, extract the unique contribution of each, and weave them into a coherent integrated model with every claim backed by a page-level citation. I also create well-formatted Obsidian vault notes with the results.
+Generate deep, actionable analyses by cross-referencing **multiple sources** from a Ragthen library. Each source covers a different angle of the same topic. I execute targeted searches for each source using its own vocabulary, extract the unique contribution of each, and weave them into a coherent integrated model with every claim backed by a page-level citation. I also create well-formatted Obsidian vault notes with the results.
 
 ## When to use me
 
@@ -40,12 +40,12 @@ Run **one generic search** plus **one directed search per source**, each using `
 
 ```bash
 # Generic (panorama)
-ragthtena search -l LIB "generic topic terms" --rerank --top 8
+ragthen search -l LIB "generic topic terms" --rerank --top 8
 
 # Per source (use each source's own vocabulary)
-ragthtena search -l LIB "source-A-unique-terms" --rerank --top 5
-ragthtena search -l LIB "source-B-unique-terms" --rerank --top 5
-ragthtena search -l LIB "source-C-unique-terms" --rerank --top 5
+ragthen search -l LIB "source-A-unique-terms" --rerank --top 5
+ragthen search -l LIB "source-B-unique-terms" --rerank --top 5
+ragthen search -l LIB "source-C-unique-terms" --rerank --top 5
 ```
 
 **Critical rule**: each directed search must contain 4-5 terms from that source's own index/glossary, not generic synonyms. If a source has few chunks, it needs its own terms to surface.
@@ -94,5 +94,5 @@ Write notes using `Out-File -Encoding UTF8` for special characters.
 
 ## Limitations
 
-- I only use text indexed in the Raghtena library. Never external knowledge.
+- I only use text indexed in the Ragthen library. Never external knowledge.
 - If a source doesn't cover the topic directly, I extract implications from related concepts.

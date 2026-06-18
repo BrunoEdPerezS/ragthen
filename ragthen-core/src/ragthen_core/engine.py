@@ -8,7 +8,7 @@ from .storage import (_get_embedding_model, get_collection, extract_pdf_pages,
                        extract_text_file, chunk_pages, INDEX_DIRNAME)
 from .rerank import rerank as _rerank_fn
 
-_log_tag = "[ragthtena]"
+_log_tag = "[ragthen]"
 
 
 def _list_libraries() -> list[str]:
@@ -39,7 +39,7 @@ def resolve_library(name: str | None = None) -> tuple[Path, Path]:
             print(f"{_log_tag} Create one: New-Item -ItemType Directory -Path "
                   f"'{get_libraries_dir()}/mylib'")
             print(f"{_log_tag} Then add PDFs/TXTs/MDs there and run: "
-                  f"ragthtena ingest -l mylib")
+                  f"ragthen ingest -l mylib")
             sys.exit(1)
         print(f"{_log_tag} Multiple libraries found. Use -l NAME to pick one.")
         for n in names:
@@ -196,7 +196,7 @@ def ask(query: str, index_dir: Path, lib_name: str,
 def status(index_dir: Path, lib_name: str):
     if not index_dir.exists() or not list(index_dir.iterdir()):
         print(f"{_log_tag} No index found in '{lib_name}'. "
-              f"Run: ragthtena ingest -l {lib_name}")
+              f"Run: ragthen ingest -l {lib_name}")
         return
 
     col = get_collection(index_dir)

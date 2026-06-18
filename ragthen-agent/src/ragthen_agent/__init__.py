@@ -1,4 +1,4 @@
-"""Raghtena Agent — CLI + backends for the Raghtena RAG system."""
+"""Ragthen Agent — CLI + backends for the Ragthen RAG system."""
 
 from .backends.interface import Backend
 from .backends.local import LocalBackend
