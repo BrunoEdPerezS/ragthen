@@ -1,10 +1,11 @@
 ---
 description: Library-only research assistant that answers exclusively from your indexed PDFs and text files. Never uses external knowledge.
-mode: subagent
+mode: all
 permission:
   bash:
     "ragthen *": allow
   read: allow
+  edit: deny
   webfetch: deny
   websearch: deny
 ---
