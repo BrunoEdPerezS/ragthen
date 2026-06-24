@@ -5,7 +5,8 @@ from pathlib import Path
 
 from .config import load_config, get_libraries_dir
 from .storage import (_get_embedding_model, get_collection, extract_pdf_pages,
-                       extract_text_file, chunk_pages, INDEX_DIRNAME)
+                       extract_text_file, extract_epub_pages, chunk_pages,
+                       INDEX_DIRNAME)
 from .rerank import rerank as _rerank_fn
 
 _log_tag = "[ragthen]"
@@ -38,7 +39,7 @@ def resolve_library(name: str | None = None) -> tuple[Path, Path]:
             print(f"{_log_tag} No libraries found in {get_libraries_dir()}/")
             print(f"{_log_tag} Create one: New-Item -ItemType Directory -Path "
                   f"'{get_libraries_dir()}/mylib'")
-            print(f"{_log_tag} Then add PDFs/TXTs/MDs there and run: "
+            print(f"{_log_tag} Then add PDFs/EPUBs/TXTs/MDs there and run: "
                   f"ragthen ingest -l mylib")
             sys.exit(1)
         print(f"{_log_tag} Multiple libraries found. Use -l NAME to pick one.")
@@ -62,38 +63,52 @@ def ingest(library_dir: Path, index_dir: Path):
     chunk_overlap = cfg.get("chunk_overlap", 250)
 
     pdf_files = list(library_dir.glob("*.pdf"))
+    epub_files = list(library_dir.glob("*.epub"))
     txt_files = list(library_dir.glob("*.txt"))
     md_files = list(library_dir.glob("*.md"))
 
-    if not pdf_files and not txt_files and not md_files:
+    if not pdf_files and not epub_files and not txt_files and not md_files:
         print(f"{_log_tag} No files found in {library_dir}")
-        print(f"{_log_tag} Place PDF, TXT, or MD files there and re-run.")
+        print(f"{_log_tag} Place PDF, EPUB, TXT, or MD files there and re-run.")
         return
 
-    print(f"{_log_tag} Found {len(pdf_files)} PDF(s), {len(txt_files)} text file(s), "
-          f"{len(md_files)} MD file(s) in '{library_dir.name}'")
+    print(f"{_log_tag} Found {len(pdf_files)} PDF(s), {len(epub_files)} EPUB(s), "
+          f"{len(txt_files)} text file(s), {len(md_files)} MD file(s) "
+          f"in '{library_dir.name}'")
     print(f"{_log_tag} Loading embedding model (all-MiniLM-L6-v2, ~80MB)...")
 
     model = _get_embedding_model()
     collection = get_collection(index_dir)
     total_chunks = 0
 
-    for filepath in pdf_files + txt_files + md_files:
+    for filepath in pdf_files + epub_files + txt_files + md_files:
         print(f"{_log_tag}   Processing: {filepath.name}")
 
-        if filepath.suffix.lower() == ".pdf":
+        suffix = filepath.suffix.lower()
+        if suffix == ".pdf":
             pages = extract_pdf_pages(filepath)
+            use_heading_aware = False
+        elif suffix == ".epub":
+            pages = extract_epub_pages(filepath)
+            use_heading_aware = True
         else:
             pages = extract_text_file(filepath)
+            use_heading_aware = suffix == ".md"
 
-        chunks = chunk_pages(pages, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        chunks = chunk_pages(pages, chunk_size=chunk_size, chunk_overlap=chunk_overlap,
+                            heading_aware=use_heading_aware)
         if not chunks:
             print(f"{_log_tag}   (no extractable text, skipping)")
             continue
 
         texts = [c["text"] for c in chunks]
         ids = [f"{filepath.stem}_{i}" for i in range(len(chunks))]
-        metadatas = [{"source": c["source"], "page": c["page"]} for c in chunks]
+        metadatas = []
+        for c in chunks:
+            meta = {"source": c["source"], "page": c["page"]}
+            if "section" in c:
+                meta["section"] = c["section"]
+            metadatas.append(meta)
 
         print(f"{_log_tag}   Embedding {len(texts)} chunks ...")
         embeddings = model.encode(texts, show_progress_bar=False).tolist()
@@ -134,12 +149,15 @@ def search(query: str, index_dir: Path, top_k: int = 5,
         relevance = round(max(0, 1 - dist / 2), 4)
         if relevance < relevance_threshold:
             continue
-        output.append({
+        result = {
             "source": meta["source"],
             "page": meta["page"],
             "relevance": relevance,
             "text": doc,
-        })
+        }
+        if "section" in meta:
+            result["section"] = meta["section"]
+        output.append(result)
 
     if rerank and output:
         output = _rerank_fn(query, output, top_k)
