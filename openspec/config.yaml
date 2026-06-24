@@ -1,0 +1,15 @@
+schema: spec-driven
+
+# Project context
+context: |
+  Tech stack: Python 3.10+, setuptools, ChromaDB (PersistentClient), sentence-transformers (all-MiniLM-L6-v2, ms-marco-MiniLM-L-6-v2), PyMuPDF (fitz), OpenAI (gpt-4o)
+  Project type: Python monorepo with 3 packages (ragthen-core, raghten-agent, raghten-content)
+  Entry point: ragthen CLI command defined in raghten-agent/pyproject.toml
+  Config: ~/.ragthen/config.json (auto-created on first run)
+  Libraries: ~/.ragthen/libraries/ (one subdir per library, containing PDFs/TXTs/MDs + .index/ ChromaDB dir)
+  Agent: mode: all opencode agent, read-only, library-only knowledge, never uses web search/fetch
+  Language: Spanish (CLI messages, agent responses, docs). Code in English.
+  Conventions: no type hints necessary, minimal docstrings, [ragthen] log tag prefix, Spanish user-facing messages via _safe_print
+  Testing: no test framework yet, manual verification via ragthen CLI commands
+  Platform: Windows (PowerShell scripts, paths with backslashes handled in vault.py)
+  Permissions model: agent has bash:ragthen* (allow), read (allow), edit (deny), webfetch (deny), websearch (deny)
