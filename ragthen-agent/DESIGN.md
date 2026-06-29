@@ -32,8 +32,8 @@ permission:
 
 | Permission | Value | Rationale |
 |---|---|---|
-| `bash: "ragthen *"` | allow | All library operations (search, ingest, clear, status) go through CLI |
-| `read` | allow | Needed to inspect library files and results |
+| `bash: "ragthen *"` | allow | All library operations (search, ingest, clear, status) go through CLI. Filesystem exploration (Get-ChildItem, ls, dir) is forbidden by prompt. |
+| `read` | allow | Needed to parse ragthen CLI output. Prompt explicitly forbids using it for glob/read/grep exploration of arbitrary paths. |
 | `edit` | deny | Ragthen is NOT an editor. Mutations are done via CLI commands only |
 | `webfetch` | deny | External knowledge is prohibited — library-only |
 | `websearch` | deny | External knowledge is prohibited — library-only |
@@ -78,6 +78,7 @@ The agent prompt (`Ragthen.md`) instructs Ragthen to use only:
 - `ragthen libraries` — discover available libraries
 - `ragthen search -l NAME "query" --rerank --top N` — semantic search
 - `ragthen status -l NAME` — inspect library contents
+- `ragthen ingest -l NAME` — index new documents into a library
 - `ragthen config` — check configuration
 
 `ragthen ask` is explicitly forbidden in the agent prompt — Ragthen IS the LLM
