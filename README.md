@@ -9,7 +9,7 @@ flowchart LR
     D[User or Agent] -->|"@Ragthen search"| E[Ragthen Agent]
     E -->|semantic search + rerank| C
     C -->|JSON context| E
-    E -->|cited answer [Fuente, Encabezado]| D
+    E -->|"cited answer [Fuente, Encabezado]"| D
 ```
 
 ---
