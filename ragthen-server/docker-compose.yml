@@ -1,0 +1,13 @@
+services:
+  ragthen-server:
+    build:
+      context: ..
+      dockerfile: ragthen-server/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ~/.ragthen:/root/.ragthen
+    environment:
+      - RAGTHEN_API_KEY=${RAGTHEN_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - LLAMA_CLOUD_API_KEY=${LLAMA_CLOUD_API_KEY:-}

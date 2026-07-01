@@ -1,0 +1,53 @@
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#e8edf2", "primaryTextColor": "#1e293b", "primaryBorderColor": "#94a3b8", "lineColor": "#64748b", "secondaryColor": "#f1f5f9", "tertiaryColor": "#f8fafc", "edgeLabelBackground": "#ffffff", "clusterBkg": "#f8fafc", "clusterBorder": "#cbd5e1", "titleColor": "#334155"}}}%%
+graph TB
+    subgraph INGESTA["INGESTA: ragthen ingest -l NAME (con LlamaIndex)"]
+        direction TB
+        A["Archivos en libreria<br/>~/.ragthen/libraries/NAME/"] --> B["SimpleDirectoryReader<br/>Auto-detecta: PDF, EPUB, MD, TXT, DOCX, PPTX"]
+        B --> C{"Reader Router (configurable)"}
+        C -->|"PDF local"| D1["PDFPaddleOCR<br/>PyMuPDF + PaddleOCR<br/>OCR para escaneados<br/>Encoding correcto<br/>Extrae texto e imagenes<br/>100% local y gratuito"]
+        C -->|"PDF cloud (opcional)"| D2["LlamaParse<br/>Agentic parsing en cloud<br/>Layout awareness total<br/>Tablas, columnas, graficos<br/>Markdown estructurado<br/>1000 paginas/dia gratis"]
+        C -->|"EPUB, TXT, MD, DOCX"| D3["SimpleDirectoryReader<br/>Lectura nativa multiformato<br/>Encoding automatico"]
+        D1 --> E["IngestionPipeline<br/>Pipeline modular con cache"]
+        D2 --> E
+        D3 --> E
+        E --> F["SentenceSplitter<br/>Corte por TOKENS, no caracteres<br/>Respeta palabras y oraciones<br/>Chunk size y overlap configurables<br/>Sin truncamiento silencioso"]
+        F --> G["SemanticChunker (opcional)<br/>Agrupa por similitud semantica<br/>Embedding-based breakpoints<br/>Preserva coherencia tematica<br/>Adaptive chunk sizing"]
+        G --> H["Metadata Extractors (opcional)<br/>TitleExtractor<br/>SummaryExtractor<br/>KeywordExtractor"]
+        H --> I["Embedding (configurable)<br/>text-embedding-3-large (3072 dims)<br/>multilingual-e5-large<br/>Ollama / HuggingFace<br/>Hasta 8192 tokens de contexto"]
+        I --> J["ChromaDB via ChromaVectorStore<br/>VectorStoreIndex.from_documents()<br/>PersistentClient<br/>Upsert y delete nativos<br/>Misma ruta: ~/.ragthen/libraries/"]
+    end
+
+    subgraph BUSQUEDA["BUSQUEDA: ragthen search -l NAME (con LlamaIndex)"]
+        direction TB
+        Q["Query del usuario"] --> QE["Embedding (mismo modelo configurable)"]
+        QE --> QS["VectorStoreIndex.as_retriever()<br/>similarity_top_k = 30<br/>ChromaDB cosine distance"]
+        QS --> QP["Node Postprocessors"]
+        QP --> QR1["LLMRerank<br/>Re-ranking via LLM<br/>choice_batch_size=5, top_n=10"]
+        QP --> QR2["SentenceTransformerRerank<br/>Cross-encoder (equivalente al actual)"]
+        QP --> QR3["LongContextReorder<br/>Reordena para optimizar<br/>ventana de contexto del LLM"]
+        QR1 --> QT["SourceNodes<br/>{text, score, metadata: source, page}"]
+        QR2 --> QT
+        QR3 --> QT
+    end
+
+    subgraph RAG["RAG ANSWER: ragthen ask -l NAME (con LlamaIndex)"]
+        direction TB
+        RA["Query del usuario"] --> RE["RetrieverQueryEngine<br/>as_query_engine()"]
+        RE --> RP["Prompt Templates<br/>Customizables por libreria<br/>System: bibliotecario"]
+        RP --> RL["LLM configurable<br/>GPT-4o / Claude / Gemini / Ollama<br/>Sintetiza con fuentes"]
+        RL --> RC["CitationQueryEngine<br/>Citas automaticas<br/>[Source: file, Page X, Score: 0.95]"]
+    end
+
+    J -.-> QS
+    J -.-> RE
+
+    style D1 fill:#ccffcc,stroke:#00aa00
+    style D2 fill:#cce5ff,stroke:#0066cc
+    style F fill:#ccffcc,stroke:#00aa00
+    style G fill:#ccffcc,stroke:#00aa00
+    style I fill:#ccffcc,stroke:#00aa00
+    style RC fill:#ccffcc,stroke:#00aa00
+
+    style INGESTA fill:#fef7ed,stroke:#d4a373,color:#5c4a3a
+    style BUSQUEDA fill:#eff6ff,stroke:#93c5fd,color:#1e3a5f
+    style RAG fill:#f0fdf4,stroke:#86efac,color:#14532d

@@ -89,15 +89,25 @@ def main():
 
     sub = parser.add_subparsers(dest="cmd")
 
-    sub.add_parser("ingest", parents=[parent_lib],
-                   help="Index all PDFs/TXTs/MDs in a library")
+    p_ingest = sub.add_parser("ingest", parents=[parent_lib],
+                              help="Index all PDFs/TXTs/MDs in a library")
+    p_ingest.add_argument("--pdfparser", choices=["auto", "local", "cloud"],
+                          default=None,
+                          help="PDF parser mode: auto (default, fallback a LlamaParse si 0 chunks), "
+                               "local (solo pypdf), cloud (solo LlamaParse)")
+    p_ingest.add_argument("--chunking", choices=["sentence", "sentence+semantic"],
+                          default=None,
+                          help="Chunking strategy: sentence (default) or sentence+semantic")
     p_search = sub.add_parser("search", parents=[parent_lib],
                               help="Semantic search (returns JSON context)")
     p_search.add_argument("query", help="Search query")
     p_search.add_argument("--top", type=int, default=5)
     p_search.add_argument("--relevance-threshold", type=float, default=0.0)
     p_search.add_argument("--rerank", action="store_true",
-                          help="Enable cross-encoder reranking")
+                          help="Enable reranking")
+    p_search.add_argument("--reranker", choices=["cross-encoder", "llm", "reorder", "none"],
+                          default=None,
+                          help="Reranker type: cross-encoder (default), llm, reorder, none")
     p_ask = sub.add_parser("ask", parents=[parent_lib],
                            help="Full RAG answer via LLM")
     p_ask.add_argument("query", help="Your question")
@@ -141,11 +151,12 @@ def main():
     backend = _get_backend()
 
     if args.cmd == "ingest":
-        backend.ingest(args.library)
+        backend.ingest(args.library, pdfparser_mode=args.pdfparser,
+                       chunking_strategy=args.chunking)
     elif args.cmd == "search":
         results = backend.search(args.query, args.library, top_k=args.top,
                                  relevance_threshold=args.relevance_threshold,
-                                 rerank=args.rerank)
+                                 rerank=args.rerank, reranker_type=args.reranker)
         _safe_print(json.dumps(results, ensure_ascii=False, indent=2))
     elif args.cmd == "ask":
         key = args.api_key or os.environ.get("OPENAI_API_KEY")

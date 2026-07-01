@@ -10,9 +10,16 @@ DEFAULT_CONFIG = {
     "remote_url": "http://localhost:8000",
     "libraries_path": str(LIBRARIES_DIR),
     "vault_path": "",
-    "chunk_size": 1200,
-    "chunk_overlap": 250,
+    "chunk_size": 1024,
+    "chunk_overlap": 200,
     "llm_model": "gpt-4o",
+    "pdfparser": "auto",
+    "embedding_model": "huggingface:sentence-transformers/all-MiniLM-L6-v2",
+    "chunking_strategy": "sentence",
+    "reranker": {
+        "type": "cross-encoder",
+        "top_n": 10,
+    },
 }
 
 _config_cache = None

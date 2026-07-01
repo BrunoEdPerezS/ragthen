@@ -1,0 +1,213 @@
+<mxfile host="Electron">
+  <diagram id="page-1" name="Page-1">
+    <mxGraphModel dx="1884" dy="946" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="left-bg" parent="1" style="shape=rectangle;rounded=1;fillColor=#fef7ed;strokeColor=#d4a373;strokeWidth=2;fontFamily=Courier New;fontSize=12;fontStyle=1;verticalAlign=top;align=left;spacingLeft=14;spacingTop=10;whiteSpace=wrap;html=1;container=0;collapsible=0;" value="&lt;b&gt;INGESTA: ragthen actual&lt;/b&gt;" vertex="1">
+          <mxGeometry height="770" width="540" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="left-n1" parent="1" style="rounded=1;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;Archivos en libreria&lt;/b&gt;&lt;hr&gt;&lt;i&gt;~/.ragthen/libraries/NAME/&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="340" x="120" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="left-n2" parent="1" style="rounded=1;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;File Discovery&lt;/b&gt;&lt;hr&gt;&lt;i&gt;glob: *.pdf, *.epub, *.txt, *.md&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="340" x="120" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="left-n3" parent="1" style="shape=rhombus;perimeter=ellipsePerimeter;fillColor=#f1f5f9;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;Router por extension&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="160" x="210" y="242" as="geometry" />
+        </mxCell>
+        <mxCell id="left-n4" parent="1" style="rounded=1;fillColor=#ffcccc;strokeColor=#cc0000;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;PyMuPDF (fitz)&lt;/b&gt;&lt;br&gt;&lt;i&gt;page.get_text()&lt;/i&gt;&lt;br&gt;&lt;font color=&quot;#cc0000&quot;&gt;Sin OCR, encoding corrupto, sin layout&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="70" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="left-n5" parent="1" style="rounded=1;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;ebooklib + markdownify&lt;/b&gt;&lt;br&gt;&lt;i&gt;XHTML a Markdown, MathML a LaTeX&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="150" x="230" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="left-n6" parent="1" style="rounded=1;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;Lectura directa&lt;/b&gt;&lt;br&gt;&lt;i&gt;utf-8, sin procesar&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="400" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="left-n7" parent="1" style="rounded=1;fillColor=#ffcccc;strokeColor=#cc0000;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;Chunking CIEGO&lt;/b&gt;&lt;br&gt;&lt;i&gt;Ventana deslizante: 1200 chars, Overlap: 250&lt;/i&gt;&lt;br&gt;&lt;font color=&quot;#cc0000&quot;&gt;Corta palabras, no respeta oraciones&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="70" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="left-n8" parent="1" style="rounded=1;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;Chunking HEADING-AWARE&lt;/b&gt;&lt;br&gt;&lt;i&gt;Regex H1-H6, respeta secciones&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="340" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="left-n9" parent="1" style="rounded=1;fillColor=#fff3cd;strokeColor=#cc9900;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;Embedding Fijo&lt;/b&gt;&lt;br&gt;&lt;i&gt;SentenceTransformer all-MiniLM-L6-v2&lt;/i&gt;&lt;br&gt;384 dim, 256 tokens max, trunca" vertex="1">
+          <mxGeometry height="60" width="340" x="120" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="left-n10" parent="1" style="shape=cylinder;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;ChromaDB&lt;/b&gt;&lt;br&gt;&lt;i&gt;PersistentClient, cosine distance&lt;/i&gt;" vertex="1">
+          <mxGeometry height="65" width="340" x="120" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="right-bg" parent="1" style="shape=rectangle;rounded=1;fillColor=#fef7ed;strokeColor=#d4a373;strokeWidth=2;fontFamily=Courier New;fontSize=12;fontStyle=1;verticalAlign=top;align=left;spacingLeft=14;spacingTop=10;whiteSpace=wrap;html=1;container=0;collapsible=0;" value="&lt;b&gt;INGESTA: con LlamaIndex&lt;/b&gt;" vertex="1">
+          <mxGeometry height="940" width="560" x="620" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n1" parent="1" style="rounded=1;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;Archivos en libreria&lt;/b&gt;&lt;hr&gt;&lt;i&gt;~/.ragthen/libraries/NAME/&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="340" x="720" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n2" parent="1" style="rounded=1;fillColor=#ccffcc;strokeColor=#00aa00;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;SimpleDirectoryReader&lt;/b&gt;&lt;br&gt;&lt;i&gt;Auto-detecta: PDF, EPUB, MD, TXT, DOCX, PPTX&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="340" x="720" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n3" parent="1" style="shape=rhombus;perimeter=ellipsePerimeter;fillColor=#f1f5f9;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;Reader Router&lt;/b&gt;&lt;br&gt;&lt;i&gt;(configurable)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="70" width="160" x="810" y="242" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n4" parent="1" style="rounded=1;fillColor=#ccffcc;strokeColor=#00aa00;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;PDFPaddleOCR&lt;/b&gt;&lt;br&gt;&lt;i&gt;PyMuPDF + PaddleOCR, OCR para escaneados&lt;/i&gt;&lt;br&gt;&lt;font color=&quot;#006600&quot;&gt;Encoding correcto, 100% local&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="140" x="660" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n5" parent="1" style="rounded=1;fillColor=#cce5ff;strokeColor=#0066cc;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;LlamaParse (cloud)&lt;/b&gt;&lt;br&gt;&lt;i&gt;Agentic parsing, Layout awareness total&lt;/i&gt;&lt;br&gt;Tablas, columnas, Markdown, 1000 pags/dia gratis" vertex="1">
+          <mxGeometry height="90" width="150" x="815" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n6" parent="1" style="rounded=1;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;SimpleDirectoryReader&lt;/b&gt;&lt;br&gt;&lt;i&gt;EPUB, TXT, MD, DOCX, Encoding automatico&lt;/i&gt;" vertex="1">
+          <mxGeometry height="70" width="140" x="1000" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n7" parent="1" style="rounded=1;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;IngestionPipeline&lt;/b&gt;&lt;br&gt;&lt;i&gt;Pipeline modular con cache&lt;/i&gt;" vertex="1">
+          <mxGeometry height="55" width="340" x="720" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n8" parent="1" style="rounded=1;fillColor=#ccffcc;strokeColor=#00aa00;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;SentenceSplitter&lt;/b&gt;&lt;br&gt;&lt;i&gt;Corte por TOKENS, respeta palabras y oraciones&lt;/i&gt;" vertex="1">
+          <mxGeometry height="55" width="200" x="690" y="625" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n9" parent="1" style="rounded=1;fillColor=#ccffcc;strokeColor=#00aa00;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;SemanticChunker&lt;/b&gt;&lt;br&gt;&lt;i&gt;Agrupa por similitud semantica, Adaptive&lt;/i&gt;" vertex="1">
+          <mxGeometry height="55" width="200" x="910" y="625" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n10" parent="1" style="rounded=1;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;Metadata Extractors&lt;/b&gt;&lt;br&gt;&lt;i&gt;TitleExtractor, SummaryExtractor&lt;/i&gt;" vertex="1">
+          <mxGeometry height="55" width="340" x="720" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n11" parent="1" style="rounded=1;fillColor=#ccffcc;strokeColor=#00aa00;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;Embedding (configurable)&lt;/b&gt;&lt;br&gt;&lt;i&gt;text-embedding-3-large (3072d), Hasta 8192 tokens&lt;/i&gt;" vertex="1">
+          <mxGeometry height="55" width="340" x="720" y="795" as="geometry" />
+        </mxCell>
+        <mxCell id="right-n12" parent="1" style="shape=cylinder;fillColor=#e8edf2;strokeColor=#94a3b8;fontFamily=Courier New;fontSize=10;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;" value="&lt;b&gt;ChromaDB&lt;/b&gt;&lt;br&gt;&lt;i&gt;ChromaVectorStore, Upsert nativo&lt;/i&gt;" vertex="1">
+          <mxGeometry height="65" width="340" x="720" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="left-e1-2" edge="1" parent="1" source="left-n1" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="left-e2-3" edge="1" parent="1" source="left-n2" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="left-e3-4" edge="1" parent="1" source="left-n3" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n4" value=".pdf">
+          <mxGeometry relative="1" x="0.2054" y="-4" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="200" y="277" />
+              <mxPoint x="200" y="324" />
+              <mxPoint x="140" y="324" />
+            </Array>
+            <mxPoint x="290" y="312" as="sourcePoint" />
+            <mxPoint x="140" y="335" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="left-e3-5" edge="1" parent="1" source="left-n3" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n5" value=".epub">
+          <mxGeometry relative="1" x="0.1772" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="200" y="277" />
+              <mxPoint x="200" y="324" />
+              <mxPoint x="290" y="324" />
+            </Array>
+            <mxPoint x="290" y="312" as="sourcePoint" />
+            <mxPoint x="305" y="335" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="left-e3-6" edge="1" parent="1" source="left-n3" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n6" value=".txt .md">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="312" as="sourcePoint" />
+            <mxPoint x="470" y="335" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="left-e4-7" edge="1" parent="1" source="left-n4" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="140" y="430" />
+              <mxPoint x="180" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="left-e6-7" edge="1" parent="1" source="left-n6" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="430" />
+              <mxPoint x="180" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="left-e5-8" edge="1" parent="1" source="left-n5" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="305" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="left-e7-9" edge="1" parent="1" source="left-n7" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="left-e8-9" edge="1" parent="1" source="left-n8" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="left-e9-10" edge="1" parent="1" source="left-n9" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="left-n10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="right-e1-2" edge="1" parent="1" source="right-n1" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="right-e2-3" edge="1" parent="1" source="right-n2" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="right-e3-4" edge="1" parent="1" source="right-n3" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n4" value="PDF local">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="277" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="right-e3-5" edge="1" parent="1" source="right-n3" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n5" value="PDF cloud (opcional)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="right-e3-6" edge="1" parent="1" source="right-n3" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n6" value="EPUB, TXT, MD, DOCX">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="right-e4-7" edge="1" parent="1" source="right-n4" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="480" />
+              <mxPoint x="890" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="right-e5-7" edge="1" parent="1" source="right-n5" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="right-e6-7" edge="1" parent="1" source="right-n6" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1070" y="480" />
+              <mxPoint x="890" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="right-e7-8" edge="1" parent="1" source="right-n7" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="660" y="568" />
+              <mxPoint x="660" y="653" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="right-e8-9" edge="1" parent="1" source="right-n8" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="right-e9-10" edge="1" parent="1" source="right-n9" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1150" y="653" />
+              <mxPoint x="1150" y="735" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="right-e10-11" edge="1" parent="1" source="right-n10" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="right-e11-12" edge="1" parent="1" source="right-n11" style="strokeColor=#64748b;endArrow=classic;endFill=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Courier New;fontSize=9;rounded=0;html=1;" target="right-n12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

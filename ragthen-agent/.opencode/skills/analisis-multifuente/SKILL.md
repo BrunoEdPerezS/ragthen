@@ -71,7 +71,7 @@ Structure with 7 sections:
 6. **What to NEVER do** — Common mistakes with source justification
 7. **Sources consulted** — All citations grouped by source
 
-Citation format: `[Source: Filename, Page X]`
+Citation format: `[Fuente: filename, Encabezado: "Section Title"]`
 
 Write notes using `Out-File -Encoding UTF8` for special characters.
 

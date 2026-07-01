@@ -32,15 +32,26 @@ class RemoteBackend(Backend):
             print(f"{_log_tag} Connection error: {e}", file=sys.stderr)
             return {}
 
-    def ingest(self, library: str) -> None:
-        self._post("/ingest", {"library": library})
+    def ingest(self, library: str,
+               pdfparser_mode: str | None = None,
+               chunking_strategy: str | None = None) -> None:
+        payload = {"library": library}
+        if pdfparser_mode:
+            payload["pdfparser"] = pdfparser_mode
+        if chunking_strategy:
+            payload["chunking"] = chunking_strategy
+        self._post("/ingest", payload)
 
     def search(self, query: str, library: str, top_k: int = 5,
-               relevance_threshold: float = 0.0, rerank: bool = False) -> list[dict]:
-        result = self._post("/search", {
+               relevance_threshold: float = 0.0, rerank: bool = False,
+               reranker_type: str | None = None) -> list[dict]:
+        payload = {
             "query": query, "library": library, "top_k": top_k,
             "relevance_threshold": relevance_threshold, "rerank": rerank,
-        })
+        }
+        if reranker_type:
+            payload["reranker"] = reranker_type
+        result = self._post("/search", payload)
         return result.get("results", [])
 
     def ask(self, query: str, library: str,

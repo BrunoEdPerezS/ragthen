@@ -8,15 +8,25 @@ from ragthen_core.config import load_config
 class LocalBackend(Backend):
     """Uses ragthen-core directly as a Python library. Zero network calls."""
 
-    def ingest(self, library: str) -> None:
+    def ingest(self, library: str,
+               pdfparser_mode: str | None = None,
+               chunking_strategy: str | None = None) -> None:
         lib_dir, index_dir = resolve_library(library)
-        _ingest(lib_dir, index_dir)
+        cfg = load_config()
+        pdfparser_mode = pdfparser_mode or cfg.get("pdfparser", "auto")
+        chunking_strategy = chunking_strategy or cfg.get("chunking_strategy", "sentence")
+        _ingest(lib_dir, index_dir, pdfparser_mode=pdfparser_mode,
+                chunking_strategy=chunking_strategy)
 
     def search(self, query: str, library: str, top_k: int = 5,
-               relevance_threshold: float = 0.0, rerank: bool = False) -> list[dict]:
+               relevance_threshold: float = 0.0, rerank: bool = False,
+               reranker_type: str | None = None) -> list[dict]:
         _, index_dir = resolve_library(library)
+        cfg = load_config()
+        reranker_type = reranker_type or cfg.get("reranker", {}).get("type", "cross-encoder")
         return _search(query, index_dir, top_k=top_k,
-                       relevance_threshold=relevance_threshold, rerank=rerank)
+                       relevance_threshold=relevance_threshold, rerank=rerank,
+                       reranker_type=reranker_type)
 
     def ask(self, query: str, library: str,
             api_key: str | None = None, model: str = "gpt-4o") -> str:
