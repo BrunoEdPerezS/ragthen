@@ -32,9 +32,9 @@ flowchart LR
 
 | Mode | Flag | What it does |
 |------|------|-------------|
-| Auto | `--pdfparser auto` (default) | Usa LlamaParse cloud si hay API key, fallback a pypdf local si no. |
-| Local | `--pdfparser local` | Solo pypdf (local, gratuito, sin OCR). |
-| Cloud | `--pdfparser cloud` | Solo LlamaParse (requiere `LLAMA_CLOUD_API_KEY`). |
+| Auto | `--pdfparser auto` (default) | Uses LlamaParse cloud if API key is available, falls back to local pypdf. |
+| Local | `--pdfparser local` | pypdf only (local, free, no OCR). |
+| Cloud | `--pdfparser cloud` | LlamaParse only (requires `LLAMA_CLOUD_API_KEY`). |
 
 Auto mode detects API key automatically from `.env` or environment variables.
 If cloud parsing fails or exceeds free tier credits, falls back silently to local.
@@ -45,8 +45,8 @@ Two strategies available:
 
 | Strategy | Flag | Behavior |
 |----------|------|----------|
-| Sentence | `--chunking sentence` (default) | SentenceSplitter: respeta oraciones y corta por tokens. |
-| Semantic | `--chunking sentence+semantic` | Agrupa por similitud semantica antes de dividir. |
+| Sentence | `--chunking sentence` (default) | SentenceSplitter: respects sentence boundaries and splits by tokens. |
+| Semantic | `--chunking sentence+semantic` | Groups by semantic similarity before splitting. |
 
 ### Section-Based Citations
 
@@ -93,9 +93,9 @@ Reranker options: `cross-encoder` (default), `llm`, `reorder`, `none`.
 
 When results are sparse or low-relevance, Ragthen doesn't guess — it asks:
 
-- "Intentar con terminos mas amplios"
-- "Ver el estado de la libreria"
-- "Buscar en otra libreria"
+- "Try broader terms"
+- "Check library status"
+- "Search in another library"
 
 ### Cross-Library Analysis
 
@@ -115,7 +115,7 @@ sequenceDiagram
     participant R as Ragthen
     participant L as Library
 
-    U->>A: "Que dice Kotler sobre pricing?"
+    U->>A: "What does Kotler say about pricing?"
     A->>R: Task(Ragthen, "search kotler pricing")
     R->>L: ragthen search -l Retsell "pricing" --rerank --top 10
     L-->>R: JSON {source, section, relevance, text}
